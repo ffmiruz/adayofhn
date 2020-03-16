@@ -1,0 +1,10 @@
+<html>
+	<script>
+	function load() {
+	  let d = new Date();
+	  let n = d.getUTCHours();
+	  fetch(n +'.html', {method: 'GET'}).then(r => r.text()).then(t => document.write(t))
+	}
+	window.onload = load()
+	</script>
+</html>

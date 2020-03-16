@@ -9,8 +9,9 @@ import (
 )
 
 func main() {
+	url := "https://news.ycombinator.com/news"
 	var client http.Client
-	resp, err := client.Get("https://news.ycombinator.com/news")
+	resp, err := client.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -2,15 +2,26 @@ package main
 
 import (
 	"io/ioutil"
+	"log"
+	"net/http"
+	"strconv"
 	"time"
 )
 
 func main() {
-	dt := time.Now()
-	// Get byte data to write to file.
-	dataString := "Hello friend"
-	dataBytes := []byte(dataString)
+	var client http.Client
+	resp, err := client.Get("https://news.ycombinator.com/news")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
 
-	// Use WriteFile to create a file with byte data.
-	ioutil.WriteFile(dt.Format("01-02-2006 15:04:05 Mon"), dataBytes, 0644)
+	dataBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	dt := time.Now().Hour()
+	filename := "site/" + strconv.Itoa(dt) + ".html"
+	ioutil.WriteFile(filename, dataBytes, 0644)
 }

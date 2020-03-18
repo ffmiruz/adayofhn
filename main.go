@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -21,8 +22,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	b := bytes.Replace(dataBytes, []byte(`href="`), []byte(`href="https://news.ycombinator.com/`), -1)
 
 	dt := time.Now().Hour()
 	filename := "site/" + strconv.Itoa(dt) + ".html"
-	ioutil.WriteFile(filename, dataBytes, 0644)
+	ioutil.WriteFile(filename, b, 0644)
 }

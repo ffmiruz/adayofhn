@@ -1,10 +1,73 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+	<body>
+		<section>A Day of HN Frontpage</section>
+		<div class="tab">
+		  <div class="tablinks">0</div>
+		  <div class="tablinks">1</div>
+		  <div class="tablinks">2</div>
+		  <div class="tablinks">3</div>
+		  <div class="tablinks">4</div>
+		  <div class="tablinks">5</div>
+		  <div class="tablinks">6</div>
+		  <div class="tablinks">7</div>
+		  <div class="tablinks">8</div>
+		  <div class="tablinks">9</div>
+		  <div class="tablinks">10</div>
+		  <div class="tablinks">11</div>
+		  <div class="tablinks">12</div>
+		  <div class="tablinks">13</div>
+		  <div class="tablinks">14</div>
+		  <div class="tablinks">15</div>
+		  <div class="tablinks">16</div>
+		  <div class="tablinks">17</div>
+		  <div class="tablinks">18</div>
+		  <div class="tablinks">19</div>
+		  <div class="tablinks">20</div>
+		  <div class="tablinks">21</div>
+		  <div class="tablinks">22</div>
+		  <div class="tablinks">23</div>
+		</div>
+		<main></main>
+	</body>
 	<script>
-	function load() {
-	  let d = new Date();
-	  let n = d.getUTCHours();
-	  fetch(n +'.html', {method: 'GET'}).then(r => r.text()).then(t => document.write(t))
+	let main = document.querySelector("main")
+	let d = new Date()
+	let hourNow = d.getUTCHours()
+	function load(h) {
+	  fetch(h +'.html', {method: 'GET'}).then(r => r.text()).then(t => main.innerHTML=t)
 	}
-	window.onload = load()
+	window.onload = load(hourNow)
+
+	function delegateSelector(selector, event, childSelector, handler) {
+	    let is = function(el, selector) {
+	      return (el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector).call(el, selector);
+	    };
+	    let elements = document.querySelectorAll(selector);
+	    [].forEach.call(elements, function(el, i){
+	        el.addEventListener(event, function(e) {
+	            if (is(e.target, childSelector)) {
+	                handler(e)                
+	            }
+	        })
+	    })
+	}
+	delegateSelector('.tab', "click", '.tablinks', function(e) {
+	  e.currentTarget.querySelectorAll('.tablinks').forEach(x => x.style.borderTop = 'solid white')
+	  e.target.style.borderTop = 'solid orange'
+	  load(e.target.textContent)
+	})
 	</script>
+	<style type="text/css">
+		section{position: relative;text-align: center;font-weight: 600;font-size: 1.4em;}
+		.tab{margin: 0.5em auto 0.5em;text-align: center;}
+		.tablinks{
+			display: inline-block;
+			font-size: 0.9em;
+			border-top: solid white;
+			width: 2em;
+		    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+		    padding: 0.2em;
+		}
+	</style>
 </html>

@@ -55,7 +55,7 @@
 	delegateSelector('.tab', "click", '.tablinks', function(e) {
 	  e.currentTarget.querySelectorAll('.tablinks').forEach(x => x.style.borderTop = 'solid white')
 	  e.target.style.borderTop = 'solid orange'
-	  load(e.target.textContent)
+	  load((e.target.textContent+hourNow)%24)
 	})
 	</script>
 	<style type="text/css">
